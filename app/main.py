@@ -1,8 +1,11 @@
 """FastAPI app: upload, review and confirm, the reminder stream and dose responses."""
 
 import asyncio
+import base64
+import binascii
 import json
 import re
+import secrets
 import uuid
 from contextlib import asynccontextmanager
 from datetime import date, datetime, timedelta, timezone
@@ -10,7 +13,7 @@ from typing import Dict, List, Literal, Optional
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
-from fastapi.responses import FileResponse, StreamingResponse
+from fastapi.responses import FileResponse, Response, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from PIL import UnidentifiedImageError
 from pydantic import BaseModel, Field, field_validator
@@ -46,6 +49,31 @@ async def lifespan(_app: FastAPI):
 
 app = FastAPI(title="Prescription Reader", lifespan=lifespan)
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+
+
+@app.middleware("http")
+async def require_password(request: Request, call_next):
+    """When APP_PASSWORD is set (a hosted copy), the browser must send it. Any user name works."""
+    if settings.app_password and request.url.path != "/healthz":
+        supplied = ""
+        scheme, _, encoded = request.headers.get("authorization", "").partition(" ")
+        if scheme.lower() == "basic":
+            try:
+                supplied = base64.b64decode(encoded).decode("utf-8").partition(":")[2]
+            except (binascii.Error, UnicodeDecodeError):
+                pass
+        if not secrets.compare_digest(supplied.encode(), settings.app_password.encode()):
+            return Response(
+                "Password required",
+                status_code=401,
+                headers={"WWW-Authenticate": 'Basic realm="Prescription Reader"'},
+            )
+    return await call_next(request)
+
+
+@app.get("/healthz", include_in_schema=False)
+def healthz():
+    return {"ok": True}
 
 
 async def temporal_client() -> Client:

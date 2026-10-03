@@ -25,6 +25,7 @@ class Settings:
     demo_mode: bool
     caregiver_notify_url: str
     data_dir: Path
+    app_password: str = ""
 
     @property
     def db_path(self) -> Path:
@@ -57,4 +58,5 @@ def get_settings() -> Settings:
         demo_mode=_flag(env("DEMO_MODE", "0")),
         caregiver_notify_url=env("CAREGIVER_NOTIFY_URL", "").strip(),
         data_dir=Path(env("DATA_DIR", str(ROOT / "data"))),
+        app_password=env("APP_PASSWORD", ""),
     )

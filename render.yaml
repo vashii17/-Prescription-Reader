@@ -1,0 +1,29 @@
+# Render blueprint: one Docker web service with a persistent disk.
+# Gemma needs about 8 GB of RAM, so smaller plans will not work.
+services:
+  - name: prescription-reader
+    type: web
+    runtime: docker
+    plan: 4c-8g          # 2c-8g is cheaper but reads photos more slowly
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /healthz
+    autoDeployTrigger: commit
+    disk:
+      name: data
+      mountPath: /var/data
+      sizeGB: 15         # model (about 5 GB), database, photos, cached audio
+    envVars:
+      - key: APP_PASSWORD        # the browser asks for this; any user name works
+        sync: false
+      - key: ELEVENLABS_API_KEY
+        sync: false
+      - key: ELEVENLABS_VOICE_ID
+        sync: false
+      - key: ELEVENLABS_MODEL
+        value: eleven_multilingual_v2
+      - key: GEMMA_MODEL
+        value: gemma4:e2b
+      - key: DEMO_MODE
+        value: "1"

@@ -150,6 +150,26 @@ Patient's reminder screen  <-  /api/reminders (SSE);  "I took it"  ->  /api/dose
 | `app/db.py` | SQLite schema |
 | `app/static/` | The four screens, plain HTML, CSS and JavaScript |
 
+## Hosting a copy on Render
+
+The app is designed to run at home, where the photo never leaves the computer. A hosted copy is useful
+for a demo link, but the prescriptions then live on the hosting server, so use made-up data there.
+
+`render.yaml` and `Dockerfile` run everything (Ollama with Gemma, Temporal, the worker and the web app)
+in one service with a persistent disk.
+
+1. Push this repository to GitHub.
+2. In Render: **New > Blueprint**, pick the repository. Render reads `render.yaml`.
+3. When asked, enter `APP_PASSWORD` (choose one), `ELEVENLABS_API_KEY` and `ELEVENLABS_VOICE_ID`.
+4. Wait for the first deploy. The web app answers within a few minutes; the Gemma model (about 5 GB)
+   then downloads to the disk in the background. Until the log says `Model gemma4:e2b is ready`,
+   the review screen says the model could not be reached.
+5. Open the service's address. The browser asks for a user name (anything) and the password.
+
+The plan must have 8 GB of RAM. It is billed for as long as the service exists, so delete the service
+(and its disk) when the demo is over. `DEMO_MODE` is set to `1` in `render.yaml`; change it in the
+service's Environment tab for real-time reminders.
+
 ## Tests
 
 ```powershell
