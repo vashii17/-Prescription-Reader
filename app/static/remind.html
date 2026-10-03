@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Medicine reminders</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="remind">
+  <main>
+    <div id="start-screen">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/></svg>
+      </div>
+      <h2>Medicine reminders</h2>
+      <button id="start" type="button" class="huge">Start reminders</button>
+      <p class="hint">Press once, then leave this screen open.</p>
+    </div>
+
+    <div id="waiting-screen" hidden>
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      </div>
+      <p id="waiting">No medicine is due right now.</p>
+    </div>
+
+    <div id="reminder" class="actions" hidden>
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/></svg>
+      </div>
+      <div class="panel">
+        <p id="reminder-text"></p>
+        <button id="taken" type="button" class="huge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+          I took it
+        </button>
+        <div class="minor">
+          <button id="skip" type="button" class="secondary">Skip</button>
+          <button id="later" type="button" class="secondary">Remind me in 10 minutes</button>
+        </div>
+      </div>
+    </div>
+
+    <p id="status" class="hint" role="status"></p>
+    <audio id="player"></audio>
+  </main>
+  <footer>Check with your doctor or pharmacist. This tool only repeats the schedule you confirmed.</footer>
+  <script src="/static/remind.js"></script>
+</body>
+</html>

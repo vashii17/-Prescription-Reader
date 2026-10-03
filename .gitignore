@@ -1,0 +1,11 @@
+# Local environment and secrets
+.venv/
+.env
+
+# Runtime data: SQLite database, uploaded photos, cached audio
+data/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/

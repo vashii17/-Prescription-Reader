@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Review prescription</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="/"><span class="mark">Rx</span><h1>Check and confirm</h1></a>
+    <nav><a href="/">All prescriptions</a></nav>
+  </header>
+  <main>
+    <ol class="steps">
+      <li class="done">Upload the photo</li>
+      <li class="current">Check and confirm</li>
+      <li>Reminders run</li>
+    </ol>
+    <p class="disclaimer">Check with your doctor or pharmacist. This tool only repeats the schedule you confirmed.</p>
+    <div id="demo" class="banner" hidden>Demo mode is on: one day passes in one minute.</div>
+    <div id="notice" class="banner" hidden></div>
+
+    <div class="review">
+      <section class="card photo">
+        <a id="photo-link" target="_blank" rel="noopener" title="Open the photo full size"><img id="photo" alt="Photo of the prescription"></a>
+        <p class="hint">Click the photo to open it full size.</p>
+      </section>
+
+      <section class="card">
+        <h2>What the computer read for <span id="patient"></span></h2>
+        <p class="hint">Compare every row with the photo and correct it. No reminder is scheduled until you press Confirm.</p>
+        <p class="legend">
+          <span class="unsure">The model was unsure</span>
+          <span class="check">Fairly sure, please check</span>
+          <span class="empty">Could not read, fill in</span>
+        </p>
+        <table class="medicine-list">
+          <thead>
+            <tr>
+              <th>Medicine</th><th>Strength</th><th>Amount per dose</th><th>When</th>
+              <th>Food</th><th>Days</th><th>Notes</th><th></th>
+            </tr>
+          </thead>
+          <tbody id="medicines"></tbody>
+        </table>
+        <p><button id="add" type="button" class="secondary">+ Add a medicine</button></p>
+
+        <h2 class="section-title">Clock times</h2>
+        <p class="hint">Times are in the patient's time zone: <strong id="timezone"></strong>.</p>
+        <div class="fields">
+          <div><label for="time-morning">Morning</label><input id="time-morning" type="time" required></div>
+          <div><label for="time-afternoon">Afternoon</label><input id="time-afternoon" type="time" required></div>
+          <div><label for="time-evening">Evening</label><input id="time-evening" type="time" required></div>
+          <div><label for="time-night">Night</label><input id="time-night" type="time" required></div>
+          <div><label for="start-date">Start date</label><input id="start-date" type="date" required></div>
+        </div>
+
+        <div id="error" class="banner error" hidden></div>
+        <div class="confirm-bar">
+          <span class="hint">Reminders start only after you confirm.</span>
+          <button id="confirm" type="button" class="large">I have checked this. Confirm and start reminders</button>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script src="/static/common.js"></script>
+  <script src="/static/review.js"></script>
+</body>
+</html>

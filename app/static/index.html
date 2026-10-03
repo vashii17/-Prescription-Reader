@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prescription Reader</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="/"><span class="mark">Rx</span><h1>Prescription Reader</h1></a>
+    <nav><a class="primary" href="/remind">Open the reminder screen</a></nav>
+  </header>
+  <main>
+    <section class="hero">
+      <h2>From a paper prescription to spoken reminders</h2>
+      <p>Take a photo, check what was read, and the patient hears each dose at the right time, in their own language.</p>
+    </section>
+    <ol class="steps">
+      <li class="current">Upload the photo</li>
+      <li>Check and confirm</li>
+      <li>Reminders run</li>
+    </ol>
+    <p class="disclaimer">Check with your doctor or pharmacist. This tool only repeats the schedule you confirmed.</p>
+    <div id="demo" class="banner" hidden>Demo mode is on: one day passes in one minute.</div>
+
+    <section class="card">
+      <h2>Read a new prescription</h2>
+      <p class="hint">The photo is read on this computer and is not sent anywhere. You will check every
+        medicine before any reminder is scheduled.</p>
+      <form id="upload">
+        <div class="upload-grid">
+          <label class="drop" id="drop" for="photo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+            <strong>Choose a photo of the prescription</strong>
+            <img id="preview" alt="" hidden>
+            <span id="file-name">or drop it here</span>
+            <input id="photo" name="photo" type="file" accept="image/*" required>
+          </label>
+          <div>
+            <div class="fields">
+              <div>
+                <label for="first-name">Patient's first name</label>
+                <input id="first-name" name="patient_first_name" type="text" maxlength="40" required>
+                <span class="hint">First name only. It is spoken in the reminder.</span>
+              </div>
+              <div>
+                <label for="language">Reminder language</label>
+                <select id="language" name="language" required></select>
+              </div>
+              <div>
+                <label for="timezone">Time zone</label>
+                <input id="timezone" name="timezone" type="text" list="timezones" required>
+                <datalist id="timezones"></datalist>
+              </div>
+            </div>
+            <div class="actions-row">
+              <button id="submit" type="submit" class="large">Read prescription</button>
+              <span id="busy" class="busy" hidden>Reading the photo on this computer. This can take a few minutes…</span>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div id="error" class="banner error" hidden></div>
+    </section>
+
+    <section class="card">
+      <h2>Prescriptions</h2>
+      <div class="scroll" id="list-wrap">
+        <table>
+          <thead><tr><th>Patient</th><th>Status</th><th>Start date</th><th>Added</th><th></th></tr></thead>
+          <tbody id="list"></tbody>
+        </table>
+      </div>
+      <p id="none" class="empty-state" hidden>Nothing here yet. Upload a photo above to begin.</p>
+    </section>
+  </main>
+  <script src="/static/common.js"></script>
+  <script src="/static/index.js"></script>
+</body>
+</html>

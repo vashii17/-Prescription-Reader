@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Schedule and summary</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="/"><span class="mark">Rx</span><h1>Schedule for <span id="patient"></span></h1></a>
+    <nav>
+      <a href="/">All prescriptions</a>
+      <a class="primary" href="/remind">Open the reminder screen</a>
+    </nav>
+  </header>
+  <main>
+    <ol class="steps">
+      <li class="done">Upload the photo</li>
+      <li class="done">Check and confirm</li>
+      <li class="current">Reminders run</li>
+    </ol>
+    <p class="disclaimer">Check with your doctor or pharmacist. This tool only repeats the schedule you confirmed.</p>
+    <div id="demo" class="banner" hidden>Demo mode: one day passes in one minute. Dose times below are the scheduled times.</div>
+    <div id="error" class="banner error" hidden></div>
+
+    <section class="card">
+      <div class="status-head">
+        <h2 id="headline"></h2>
+        <button id="cancel" type="button" class="danger" hidden>Stop this schedule</button>
+      </div>
+      <div class="tiles">
+        <div class="tile taken"><b id="count-taken">0</b>taken</div>
+        <div class="tile"><b id="count-skipped">0</b>skipped</div>
+        <div class="tile missed"><b id="count-missed">0</b>missed</div>
+        <div class="tile"><b id="count-pending">0</b>still to come</div>
+      </div>
+      <p id="next" class="hint"></p>
+    </section>
+
+    <section class="card">
+      <h2>Confirmed medicines</h2>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Medicine</th><th>Strength</th><th>Amount per dose</th><th>When</th><th>Food</th><th>Days</th><th>Notes</th></tr></thead>
+          <tbody id="medicines"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Doses</h2>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Due</th><th>Medicine</th><th>Result</th><th>Reminders sent</th></tr></thead>
+          <tbody id="doses"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Reminder log</h2>
+      <p class="hint">Every reminder the workflow sent, with the time it was planned for and the time it went out.</p>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Dose due</th><th>Event</th><th>Planned for</th><th>Sent at</th><th>Voice</th></tr></thead>
+          <tbody id="events"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script src="/static/common.js"></script>
+  <script src="/static/summary.js"></script>
+</body>
+</html>
